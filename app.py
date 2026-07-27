@@ -53,6 +53,7 @@ def create_folders():
     """
     for folder in [UPLOAD_FOLDER, ENCRYPTED_FOLDER, DECRYPTED_FOLDER]:
         os.makedirs(folder, exist_ok=True)
+        create_folders()
 
 
 def allowed_file(filename: str) -> bool:
