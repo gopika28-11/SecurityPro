@@ -47,13 +47,10 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 
 def create_folders():
-    """
-    Create necessary folders if they don't exist.
-    This runs when the app starts to ensure all directories are ready.
-    """
     for folder in [UPLOAD_FOLDER, ENCRYPTED_FOLDER, DECRYPTED_FOLDER]:
         os.makedirs(folder, exist_ok=True)
-        create_folders()
+
+create_folders()
 
 
 def allowed_file(filename: str) -> bool:
@@ -265,20 +262,14 @@ def decrypt():
 # ============================================================
 
 if __name__ == '__main__':
-    # Create necessary folders before starting the app
-    create_folders()
-
-    # Run the Flask development server
-    # debug=True enables auto-reload and detailed error pages (disable in production)
     print("=" * 50)
     print("  Secure File Encryption & Decryption Tool")
     print("  Running at: http://127.0.0.1:5000")
     print("=" * 50)
-    import os
 
-app.run(
-    debug=False,
-    use_reloader=False,
-    host="0.0.0.0",
-    port=int(os.environ.get("PORT", 5000))
-)
+    app.run(
+        debug=False,
+        use_reloader=False,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000))
+    )
