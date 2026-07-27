@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Encryption & Decryption Tool</title>
+
+    <!-- Bootstrap 5 CSS for responsive, modern styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons for visual elements -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- NAVIGATION BAR -->
+    <!-- ============================================================ -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-shield-lock-fill me-2"></i>
+                Secure File Encryption Tool
+            </a>
+        </div>
+    </nav>
+
+    <!-- ============================================================ -->
+    <!-- MAIN CONTENT -->
+    <!-- ============================================================ -->
+    <div class="container my-5">
+
+        <!-- Page Header -->
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bold text-primary">
+                <i class="bi bi-file-earmark-lock2"></i>
+                File Encryption & Decryption
+            </h1>
+            <p class="lead text-muted">
+                Securely encrypt and decrypt your files using AES encryption.
+                Your password is never stored — only you can access your files.
+            </p>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- FLASH MESSAGES (Success/Error Alerts) -->
+        <!-- These appear when the server sends feedback to the user -->
+        <!-- ============================================================ -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                        <i class="bi {% if category == 'success' %}bi-check-circle-fill{% else %}bi-exclamation-triangle-fill{% endif %} me-2"></i>
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- ============================================================ -->
+        <!-- ENCRYPT AND DECRYPT CARDS -->
+        <!-- ============================================================ -->
+        <div class="row g-4">
+
+            <!-- ============================== -->
+            <!-- ENCRYPTION SECTION -->
+            <!-- ============================== -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm h-100 border-success">
+                    <div class="card-header bg-success text-white text-center">
+                        <h4 class="mb-0">
+                            <i class="bi bi-lock-fill me-2"></i>
+                            Encrypt File
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-4">
+                            Upload a file and set a password to encrypt it securely.
+                        </p>
+
+                        <!-- Encryption Form -->
+                        <form action="/encrypt" method="POST" enctype="multipart/form-data" id="encryptForm">
+
+                            <!-- File Upload Input -->
+                            <div class="mb-3">
+                                <label for="encryptFile" class="form-label fw-semibold">
+                                    <i class="bi bi-upload me-1"></i> Choose File
+                                </label>
+                                <input type="file"
+                                       class="form-control"
+                                       id="encryptFile"
+                                       name="file"
+                                       accept=".txt,.pdf,.docx,.png,.jpg,.jpeg,.csv,.xlsx"
+                                       required>
+                                <div class="form-text">
+                                    Supported: txt, pdf, docx, png, jpg, csv, xlsx (max 16MB)
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="mb-3">
+                                <label for="encryptPassword" class="form-label fw-semibold">
+                                    <i class="bi bi-key-fill me-1"></i> Password
+                                </label>
+                                <div class="input-group">
+                                    <input type="password"
+                                           class="form-control"
+                                           id="encryptPassword"
+                                           name="password"
+                                           placeholder="Enter a strong password"
+                                           minlength="4"
+                                           required>
+                                    <button class="btn btn-outline-secondary toggle-password"
+                                            type="button"
+                                            data-target="encryptPassword"
+                                            aria-label="Toggle password visibility">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">
+                                    Minimum 4 characters. Remember this password for decryption!
+                                </div>
+                            </div>
+
+                            <!-- Encrypt Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="bi bi-lock-fill me-2"></i>
+                                    Encrypt & Download
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================== -->
+            <!-- DECRYPTION SECTION -->
+            <!-- ============================== -->
+            <div class="col-lg-6">
+                <div class="card shadow-sm h-100 border-primary">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h4 class="mb-0">
+                            <i class="bi bi-unlock-fill me-2"></i>
+                            Decrypt File
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-4">
+                            Upload an encrypted file and enter the same password to decrypt it.
+                        </p>
+
+                        <!-- Decryption Form -->
+                        <form action="/decrypt" method="POST" enctype="multipart/form-data" id="decryptForm">
+
+                            <!-- File Upload Input -->
+                            <div class="mb-3">
+                                <label for="decryptFile" class="form-label fw-semibold">
+                                    <i class="bi bi-upload me-1"></i> Choose Encrypted File
+                                </label>
+                                <input type="file"
+                                       class="form-control"
+                                       id="decryptFile"
+                                       name="file"
+                                       required>
+                                <div class="form-text">
+                                    Upload the encrypted file you want to decrypt.
+                                </div>
+                            </div>
+
+                            <!-- Password Input -->
+                            <div class="mb-3">
+                                <label for="decryptPassword" class="form-label fw-semibold">
+                                    <i class="bi bi-key-fill me-1"></i> Password
+                                </label>
+                                <div class="input-group">
+                                    <input type="password"
+                                           class="form-control"
+                                           id="decryptPassword"
+                                           name="password"
+                                           placeholder="Enter the encryption password"
+                                           required>
+                                    <button class="btn btn-outline-secondary toggle-password"
+                                            type="button"
+                                            data-target="decryptPassword"
+                                            aria-label="Toggle password visibility">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">
+                                    Must be the same password used during encryption.
+                                </div>
+                            </div>
+
+                            <!-- Decrypt Button -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-unlock-fill me-2"></i>
+                                    Decrypt & Download
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- HOW IT WORKS SECTION -->
+        <!-- ============================================================ -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            How It Works
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3 mb-3">
+                                <div class="step-icon">
+                                    <i class="bi bi-cloud-upload display-4 text-success"></i>
+                                </div>
+                                <h6 class="mt-2">1. Upload File</h6>
+                                <p class="text-muted small">Select the file you want to encrypt or decrypt.</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="step-icon">
+                                    <i class="bi bi-key display-4 text-warning"></i>
+                                </div>
+                                <h6 class="mt-2">2. Enter Password</h6>
+                                <p class="text-muted small">Choose a strong password you'll remember.</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="step-icon">
+                                    <i class="bi bi-gear display-4 text-primary"></i>
+                                </div>
+                                <h6 class="mt-2">3. Process</h6>
+                                <p class="text-muted small">AES encryption secures your file instantly.</p>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="step-icon">
+                                    <i class="bi bi-download display-4 text-info"></i>
+                                </div>
+                                <h6 class="mt-2">4. Download</h6>
+                                <p class="text-muted small">Get your encrypted or decrypted file.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- FOOTER -->
+    <!-- ============================================================ -->
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p class="mb-0">
+            <i class="bi bi-shield-check me-1"></i>
+            Secure File Encryption Tool &mdash; Built with Flask & Fernet (AES) Encryption
+        </p>
+    </footer>
+
+    <!-- Bootstrap 5 JavaScript Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript for password toggle -->
+    <script>
+        // Toggle password visibility when the eye icon is clicked
+        document.querySelectorAll('.toggle-password').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var targetId = this.getAttribute('data-target');
+                var input = document.getElementById(targetId);
+                var icon = this.querySelector('i');
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('bi-eye');
+                    icon.classList.add('bi-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('bi-eye-slash');
+                    icon.classList.add('bi-eye');
+                }
+            });
+        });
+
+        // Client-side form validation feedback
+        document.querySelectorAll('form').forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            });
+        });
+    </script>
+
+</body>
+</html>

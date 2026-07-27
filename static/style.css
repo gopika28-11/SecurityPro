@@ -1,0 +1,180 @@
+/*
+ * style.css - Custom styles for the Secure File Encryption Tool
+ *
+ * This file adds custom styling on top of Bootstrap 5.
+ * Bootstrap handles most of the responsive layout and components,
+ * so we only need minimal custom CSS here.
+ */
+
+/* ============================================================
+   BODY & GENERAL STYLES
+   ============================================================ */
+
+body {
+    /* Light gray background for a clean, modern look */
+    background-color: #f8f9fa;
+    /* Ensure footer stays at bottom on short pages */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main content area grows to push footer down */
+.container.my-5 {
+    flex: 1;
+}
+
+/* ============================================================
+   CARD STYLES
+   ============================================================ */
+
+.card {
+    /* Smooth transition for hover effects */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.card:hover {
+    /* Subtle lift effect on hover */
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    /* Slightly larger padding for card headers */
+    padding: 1rem 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* ============================================================
+   FORM STYLES
+   ============================================================ */
+
+/* Style the file input to look more polished */
+.form-control[type="file"] {
+    padding: 0.5rem;
+}
+
+/* Password input group styling */
+.input-group .btn-outline-secondary {
+    border-color: #dee2e6;
+}
+
+.input-group .btn-outline-secondary:hover {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+/* ============================================================
+   BUTTON STYLES
+   ============================================================ */
+
+.btn-lg {
+    /* Make buttons slightly more padded */
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.btn-success {
+    /* Custom green for encrypt button */
+    background-color: #198754;
+    border-color: #198754;
+}
+
+.btn-success:hover {
+    background-color: #157347;
+    border-color: #146c43;
+}
+
+.btn-primary {
+    /* Custom blue for decrypt button */
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+/* ============================================================
+   ALERT STYLES
+   ============================================================ */
+
+.alert {
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+}
+
+/* ============================================================
+   HOW IT WORKS SECTION
+   ============================================================ */
+
+.step-icon {
+    /* Circle background for step icons */
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    border: 2px solid #e9ecef;
+    transition: background-color 0.2s ease;
+}
+
+.step-icon:hover {
+    background-color: #e9ecef;
+}
+
+/* ============================================================
+   NAVBAR STYLES
+   ============================================================ */
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+/* ============================================================
+   FOOTER STYLES
+   ============================================================ */
+
+footer {
+    margin-top: auto;
+}
+
+footer p {
+    font-size: 0.9rem;
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+
+/* On smaller screens, reduce padding */
+@media (max-width: 768px) {
+    .display-5 {
+        font-size: 1.8rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+
+    .step-icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .step-icon .display-4 {
+        font-size: 1.5rem !important;
+    }
+}

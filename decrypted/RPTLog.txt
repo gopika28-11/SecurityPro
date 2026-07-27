@@ -1,0 +1,50 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260508101402
+Username: WORKGROUP\SYSTEM
+RunAs User: WORKGROUP\SYSTEM
+Configuration Name: 
+Machine: HOSNBS8526213 (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell.exe -ExecutionPolicy RemoteSigned -file C:\Program Files (x86)\ManageEngine\UEMS_Agent\Computer\startup\23675000319523491\Delete and create Restore NEW.ps1
+Process ID: 25444
+PSVersion: 5.1.26100.8115
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8115
+BuildVersion: 10.0.26100.8115
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Status    Before - After
+Free GB = 380.66 -380.82
+used %  = 20.02 - 19.99
+**********************
+Windows PowerShell transcript end
+End time: 20260508101417
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20260508101909
+Username: WORKGROUP\SYSTEM
+RunAs User: WORKGROUP\SYSTEM
+Configuration Name: 
+Machine: HOSNBS8526213 (Microsoft Windows NT 10.0.26200.0)
+Host Application: powershell.exe -ExecutionPolicy RemoteSigned -file C:\Program Files (x86)\ManageEngine\UEMS_Agent\Computer\startup\23675000316099874\Delete and create Restore NEW.ps1
+Process ID: 11172
+PSVersion: 5.1.26100.8115
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8115
+BuildVersion: 10.0.26100.8115
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Status    Before - After
+Free GB = 381.2 -381.33
+used %  = 19.91 - 19.88
+**********************
+Windows PowerShell transcript end
+End time: 20260508101923
+**********************
